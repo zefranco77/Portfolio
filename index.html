@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZEFRANCO | Portfólio Profissional</title>
+    <style>
+        :root {
+            --primary: #6a00ff;
+            --secondary: #00f7ff;
+            --dark: #000000;
+            --darker: #000000;
+            --light: #ffffff;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Fundo Estelado Ultra Escuro */
+        .space-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: var(--dark);
+            overflow: hidden;
+        }
+        
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle var(--duration, 5s) infinite ease-in-out;
+            opacity: var(--opacity, 0.8);
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 1; }
+        }
+        
+        .shooting-star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+            animation: shoot linear;
+            opacity: 0;
+        }
+        
+        @keyframes shoot {
+            0% {
+                transform: translateX(0) translateY(0);
+                opacity: 1;
+            }
+            70% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(1000px) translateY(300px);
+                opacity: 0;
+            }
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        header {
+            padding: 20px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradientShift 8s linear infinite;
+            background-size: 300% 100%;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: var(--transition);
+        }
+        
+        nav a:hover:after {
+            width: 100%;
+        }
+        
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 150px 0 80px;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 600px;
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero h1 span {
+            background: linear-gradient(90deg, var(--primary), var(--secondary), #ff00f7, var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+            animation: gradientShift 8s linear infinite;
+            background-size: 300% 100%;
+        }
+        
+        .hero p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 30px;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+            animation: gradientShift 8s linear infinite;
+            background-size: 300% 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(106, 0, 255, 0.3);
+            animation: gradientShift 4s linear infinite;
+        }
+        
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 50px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            bottom: -10px;
+            left: 0;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), #ff00f7, var(--primary));
+            border-radius: 2px;
+            animation: gradientShift 8s linear infinite;
+            background-size: 300% 100%;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .project-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            padding: 25px;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(106, 0, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 247, 255, 0.1);
+        }
+        
+        .project-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--light);
+        }
+        
+        .project-card p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .project-tags span {
+            background: rgba(0, 247, 255, 0.1);
+            color: var(--secondary);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            animation: gradientShift 8s linear infinite;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), #ff00f7, var(--primary));
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 50px 0 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.8rem;
+        }
+        
+        /* Player de Áudio Minimalista */
+        .audio-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 1000;
+            border: 1px solid rgba(106, 0, 255, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .audio-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .play-btn {
+            background: linear-gradient(90deg, var(--primary), var(--secondary), #ff00f7, var(--primary));
+            color: var(--dark);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            animation: gradientShift 8s linear infinite;
+            background-size: 300% 100%;
+        }
+        
+        .play-btn:hover {
+            transform: scale(1.1);
+            animation: gradientShift 4s linear infinite;
+        }
+        
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .volume-slider {
+            width: 80px;
+            -webkit-appearance: none;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        
+        .volume-slider:hover {
+            opacity: 1;
+        }
+        
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--secondary);
+            cursor: pointer;
+        }
+        
+        .now-playing {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        /* Animação de gradiente */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            nav ul {
+                gap: 15px;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .audio-player {
+                bottom: 10px;
+                right: 10px;
+                padding: 8px 15px;
+            }
+            
+            .now-playing {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fundo Preto com Estrelas -->
+    <div class="space-background" id="spaceBackground"></div>
+
+    <header>
+        <div class="header-container container">
+            <div class="logo">ZEFRANCO</div>
+            <nav>
+                <ul>
+                    <li><a href="#about">Sobre</a></li>
+                    <li><a href="#projects">Projetos</a></li>
+                    <li><a href="#skills">Habilidades</a></li>
+                    <li><a href="#contact">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="about" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Programar<span> não é apenas uma habilidade</span> é uma arte, um investimento, um legado!</h1>
+                    <p>Olá, eu sou zefranco, um desenvolvedor FullStack apaixonado por tecnologia e soluções inovadoras. Com experiência tanto no front-end quanto no back-end, tenho um perfil versátil e focado em entregar aplicações robustas, escaláveis e com ótima experiência de usuário.</p>
+                    <a href="#projects" class="btn">Ver Projetos</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="container">
+            <h2 class="section-title">Projetos em Destaque</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>ForGamesRum</h3>
+                    <p>Plataforma avançada para a integração de gamers. Com o intuito de unir comunidades de jogadores de acordo com as características e rank.</p>
+                    <div class="project-tags">
+                        <span>Python</span>
+                        <span>Java</span>
+                        <span>JavaScript</span>
+                        <span>CSS</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>Plataforma de Streaming com WebSockets</h3>
+                    <p>Backend para uma plataforma de streaming com chat em tempo real utilizando WebSockets. O sistema usa Redis para escalar horizontalmente e PostgreSQL para persistência de mensagens.</p>
+                    <div class="project-tags">
+                        <span>JavaScript</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>Mini Kubernetes em Go</h3>
+                    <p>Este projeto é uma simulação de um orquestrador de containers fake, inspirado no Kubernetes, escrito em Go. Ele utiliza conceitos de sistemas distribuídos, goroutines e gRPC para simular agendamentos e comunicação entre nós.</p>
+                    <div class="project-tags">
+                        <span>Go</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="container">
+            <h2 class="section-title">Habilidades Técnicas</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>Frontend</h3>
+                    <p>React, Vue, TypeScript, Next.js, Tailwind CSS, WebGL</p>
+                    <div class="project-tags">
+                        <span>UI/UX</span>
+                        <span>Performance</span>
+                        <span>3D</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>Backend</h3>
+                    <p>Node.js, Python, Rust, Go, PostgreSQL, MongoDB</p>
+                    <div class="project-tags">
+                        <span>APIs</span>
+                        <span>Microservices</span>
+                        <span>Cloud</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>DevOps</h3>
+                    <p>Docker, Kubernetes, AWS, CI/CD, Terraform, Ansible</p>
+                    <div class="project-tags">
+                        <span>Infraestrutura</span>
+                        <span>Escalabilidade</span>
+                        <span>Segurança</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="container">
+            <h2 class="section-title">Entre em Contato</h2>
+            <p>Tem ideia de algum projeto? Entre em contato!</p>
+            <a href="mailto:josefranciscooliveirapimentel@gmail.com" class="btn" style="margin-top: 30px;">Enviar Mensagem</a>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 ZEFRANCO Dev. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Player de Áudio -->
+    <div class="audio-player">
+        <div class="now-playing" id="nowPlaying">DarkSpace Theme</div>
+        <div class="audio-controls">
+            <button class="play-btn" id="playBtn">❚❚</button>
+            <div class="volume-control">
+                <span>🔊</span>
+                <input type="range" min="0" max="1" step="0.01" value="0.5" class="volume-slider" id="volumeSlider">
+            </div>
+        </div>
+    </div>
+
+    <!-- Elemento de Áudio (invisível) -->
+    <audio id="backgroundMusic" autoplay loop>
+        <source src="Imperius (Slowed) [NK3MghktlF0].mp3" type="audio/mpeg">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+
+    <script>
+        // Criar estrelas dinamicamente
+        const spaceBackground = document.getElementById('spaceBackground');
+        const starsCount = 150;
+        
+        for (let i = 0; i < starsCount; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            
+            const size = Math.random() * 1 + 1;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            
+            star.style.setProperty('--duration', `${Math.random() * 5 + 5}s`);
+            star.style.setProperty('--opacity', Math.random() * 0.5 + 0.1);
+            star.style.animationDelay = `${Math.random() * 10}s`;
+            
+            spaceBackground.appendChild(star);
+        }
+        
+        function createShootingStar() {
+            const shootingStar = document.createElement('div');
+            shootingStar.className = 'shooting-star';
+            
+            const startX = Math.random() * 20;
+            const startY = Math.random() * 20;
+            shootingStar.style.left = `${startX}%`;
+            shootingStar.style.top = `${startY}%`;
+            
+            const duration = Math.random() * 3 + 2;
+            shootingStar.style.animationDuration = `${duration}s`;
+            
+            spaceBackground.appendChild(shootingStar);
+            
+            setTimeout(() => {
+                shootingStar.remove();
+            }, duration * 1000);
+        }
+        
+        setInterval(createShootingStar, 3000);
+
+        // Controles do Player de Áudio
+        const audio = document.getElementById('backgroundMusic');
+        const playBtn = document.getElementById('playBtn');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const nowPlaying = document.getElementById('nowPlaying');
+
+        // Configuração inicial
+        audio.volume = 0.5;
+        
+        // Controle de play/pause
+        playBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                playBtn.textContent = "❚❚";
+            } else {
+                audio.pause();
+                playBtn.textContent = "▶";
+            }
+        });
+
+        // Controle de volume
+        volumeSlider.addEventListener('input', () => {
+            audio.volume = volumeSlider.value;
+        });
+
+        // Tentativa de autoplay (pode ser bloqueada pelo navegador)
+        document.addEventListener('click', function() {
+            audio.play().then(() => {
+                playBtn.textContent = "❚❚";
+            }).catch(e => {
+                console.log("Autoplay bloqueado: ", e);
+            });
+        }, { once: true });
+    </script>
+</body>
+</html>
