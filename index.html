@@ -384,6 +384,37 @@
             100% { background-position: 100% 50%; }
         }
         
+        /* Contador de Visualizações Atualizado */
+        .view-counter {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 1000;
+            border: 1px solid rgba(106, 0, 255, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            font-size: 0.9rem;
+        }
+        
+        .eye-icon {
+            width: 18px;
+            height: 18px;
+            fill: var(--secondary);
+            filter: drop-shadow(0 0 2px var(--primary));
+            transition: var(--transition);
+        }
+        
+        .view-counter:hover .eye-icon {
+            fill: var(--primary);
+            transform: scale(1.1);
+        }
+        
         /* Responsividade */
         @media (max-width: 768px) {
             .hero h1 {
@@ -406,6 +437,13 @@
             
             .now-playing {
                 display: none;
+            }
+            
+            .view-counter {
+                bottom: 10px;
+                left: 10px;
+                font-size: 0.8rem;
+                padding: 6px 12px;
             }
         }
     </style>
@@ -527,6 +565,14 @@
         </div>
     </div>
 
+    <!-- Contador de Visualizações Atualizado -->
+    <div class="view-counter">
+        <svg class="eye-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5z"/>
+        </svg>
+        <span id="viewCount">0</span>
+    </div>
+
     <!-- Elemento de Áudio (invisível) -->
     <audio id="backgroundMusic" autoplay loop>
         <source src="Imperius (Slowed) [NK3MghktlF0].mp3" type="audio/mpeg">
@@ -610,6 +656,44 @@
                 console.log("Autoplay bloqueado: ", e);
             });
         }, { once: true });
+
+        // Contador de Visualizações
+        const viewCountElement = document.getElementById('viewCount');
+        
+        // Simulação de contador de visualizações (em um sistema real, você usaria um backend)
+        function simulateViewCounter() {
+            // Verifica se já existe um contador no localStorage
+            let views = localStorage.getItem('pageViews');
+            
+            if (views) {
+                views = parseInt(views) + 1;
+            } else {
+                views = 1;
+            }
+            
+            // Atualiza o localStorage
+            localStorage.setItem('pageViews', views);
+            
+            // Atualiza o contador na tela com animação
+            animateCounter(viewCountElement, 0, views, 1000);
+        }
+        
+        // Função para animar o contador
+        function animateCounter(element, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                element.textContent = Math.floor(progress * (end - start) + start);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+        
+        // Inicia o contador quando a página carrega
+        window.addEventListener('load', simulateViewCounter);
     </script>
 </body>
 </html>
