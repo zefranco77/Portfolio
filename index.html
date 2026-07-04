@@ -1,768 +1,242 @@
+Salve como index.html e abra no navegador:
+
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>ZEFRANCO | Ecos do Abismo</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: #000000;
-            color: #e0e0e0;
-            font-family: 'Inter', 'Segoe UI', 'Courier New', monospace;
-            line-height: 1.5;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Fundo Abissal - Puro preto com textura de ruído e partículas */
-        .abyss {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            background: radial-gradient(circle at 30% 10%, #0a0a0a, #000000);
-        }
-
-        .noise-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJmIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjciIG51bU9jdGF2ZXM9IjMiLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWx0ZXI9InVybCgjZikiIG9wYWNpdHk9IjAuMDQiLz48L3N2Zz4=');
-            background-repeat: repeat;
-            opacity: 0.2;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        /* Partículas de cinza (estilo cinza morto) */
-        .ash {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .ash-particle {
-            position: absolute;
-            background: #2a2a2a;
-            border-radius: 50%;
-            filter: blur(1px);
-            animation: fall linear infinite;
-            opacity: 0.5;
-        }
-
-        @keyframes fall {
-            0% {
-                transform: translateY(-10vh) translateX(0);
-                opacity: 0;
-            }
-            20% {
-                opacity: 0.6;
-            }
-            100% {
-                transform: translateY(110vh) translateX(20px);
-                opacity: 0;
-            }
-        }
-
-        /* Container principal */
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 28px;
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Header minimalista e fantasmagórico */
-        header {
-            padding: 24px 0;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
-            z-index: 100;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            transition: 0.2s;
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .logo {
-            font-weight: 800;
-            font-size: 1.8rem;
-            letter-spacing: -1px;
-            color: #ffffff;
-            text-shadow: 0 0 2px #fff, 0 0 4px #444;
-            font-family: 'Courier New', monospace;
-            border-right: 2px solid #3a3a3a;
-            padding-right: 16px;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 32px;
-        }
-
-        nav a {
-            color: #cccccc;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            transition: 0.25s;
-            position: relative;
-        }
-
-        nav a:hover {
-            color: #ffffff;
-            text-shadow: 0 0 5px #fff;
-        }
-
-        nav a:after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 1px;
-            bottom: -6px;
-            left: 0;
-            background-color: #ffffff;
-            transition: 0.25s;
-        }
-
-        nav a:hover:after {
-            width: 100%;
-        }
-
-        /* Hero section - dark brutalista */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 140px 0 80px;
-        }
-
-        .hero-content {
-            max-width: 700px;
-            border-left: 3px solid #2e2e2e;
-            padding-left: 32px;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 28px;
-            line-height: 1.2;
-            color: #f0f0f0;
-        }
-
-        .hero h1 span {
-            color: #a0a0a0;
-            border-bottom: 2px solid #4f4f4f;
-            display: inline-block;
-        }
-
-        .hero p {
-            color: #aaa;
-            margin-bottom: 36px;
-            font-size: 1rem;
-            line-height: 1.7;
-            text-align: justify;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 12px 32px;
-            background: transparent;
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            border: 1.5px solid #3a3a3a;
-            transition: 0.3s;
-            cursor: pointer;
-            text-transform: uppercase;
-            backdrop-filter: blur(4px);
-        }
-
-        .btn:hover {
-            background-color: #1c1c1c;
-            border-color: #fff;
-            box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
-        }
-
-        section {
-            padding: 90px 0;
-            border-top: 1px solid rgba(60, 60, 60, 0.4);
-        }
-
-        .section-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 56px;
-            position: relative;
-            text-transform: uppercase;
-            letter-spacing: -0.5px;
-            color: #eaeaea;
-        }
-
-        .section-title:before {
-            content: '';
-            position: absolute;
-            width: 48px;
-            height: 2px;
-            background: #5a5a5a;
-            bottom: -12px;
-            left: 0;
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 32px;
-        }
-
-        .project-card {
-            background: #0a0a0a;
-            border: 1px solid #242424;
-            padding: 28px 24px;
-            transition: 0.25s ease;
-            backdrop-filter: blur(2px);
-        }
-
-        .project-card:hover {
-            border-color: #6b6b6b;
-            background: #0f0f0f;
-            transform: translateY(-4px);
-        }
-
-        .project-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 16px;
-            font-weight: 600;
-            color: #ddd;
-            letter-spacing: -0.2px;
-        }
-
-        .project-card p {
-            color: #9a9a9a;
-            font-size: 0.85rem;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 18px;
-        }
-
-        .project-tags span {
-            background: #151515;
-            color: #b0b0b0;
-            padding: 5px 12px;
-            font-size: 0.7rem;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            border-left: 2px solid #4a4a4a;
-            font-family: monospace;
-        }
-
-        /* Habilidades cards monocromáticos */
-        .skill-card {
-            background: #050505;
-            border: 1px solid #2c2c2c;
-        }
-
-        footer {
-            text-align: center;
-            padding: 48px 0 36px;
-            border-top: 1px solid #181818;
-            color: #6a6a6a;
-            font-size: 0.75rem;
-            letter-spacing: 1px;
-        }
-
-        /* Player de Áudio - Estilo sepulcral */
-        .audio-player {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(12px);
-            border-radius: 0px;
-            padding: 10px 20px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            z-index: 1000;
-            border: 1px solid #2f2f2f;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-        }
-
-        .play-btn {
-            background: #1a1a1a;
-            color: #fff;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: 0.2s;
-            border: 1px solid #3e3e3e;
-            font-size: 1rem;
-            font-weight: bold;
-        }
-
-        .play-btn:hover {
-            background: #2d2d2d;
-            border-color: #aaa;
-        }
-
-        .volume-control {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .volume-slider {
-            width: 80px;
-            -webkit-appearance: none;
-            height: 2px;
-            background: #2e2e2e;
-            outline: none;
-        }
-
-        .volume-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 10px;
-            height: 10px;
-            border-radius: 0%;
-            background: #cfcfcf;
-            cursor: pointer;
-        }
-
-        .now-playing {
-            font-size: 0.7rem;
-            color: #b9b9b9;
-            max-width: 130px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            font-family: monospace;
-        }
-
-        /* Contador de visualizações - minimalismo sombrio */
-        .view-counter {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(12px);
-            border-radius: 0px;
-            padding: 8px 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            z-index: 1000;
-            border: 1px solid #2b2b2b;
-            font-size: 0.8rem;
-            font-family: monospace;
-        }
-
-        .eye-icon {
-            width: 18px;
-            height: 18px;
-            fill: #bdbdbd;
-            opacity: 0.8;
-        }
-
-        /* Contato linha simples */
-        .contact-line {
-            margin-top: 20px;
-            display: flex;
-            gap: 24px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .contact-line p {
-            color: #aaa;
-        }
-
-        hr {
-            border-color: #222;
-            margin: 20px 0;
-        }
-
-        /* Responsividade */
-        @media (max-width: 760px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-            nav ul {
-                gap: 18px;
-            }
-            .hero-content {
-                padding-left: 20px;
-            }
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-            .audio-player .now-playing {
-                display: none;
-            }
-            .view-counter {
-                bottom: 10px;
-                left: 10px;
-                padding: 6px 12px;
-            }
-            .audio-player {
-                bottom: 10px;
-                right: 10px;
-                padding: 8px 15px;
-            }
-        }
-
-        /* Animações para o cursor de cinzas */
-        .bleak {
-            transition: all 0.2s;
-        }
-
-        /* texto selecionado */
-        ::selection {
-            background: #3a3a3a;
-            color: white;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfólio Cyber Security</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    body {
+      min-height: 100vh;
+      background: #020203;
+      color: #f5f5f5;
+      overflow-x: hidden;
+      position: relative;
+    }
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+      position: relative;
+      z-index: 2;
+    }
+    .content {
+      max-width: 900px;
+      background: rgba(5, 5, 8, 0.75);
+      border: 1px solid rgba(0, 255, 170, 0.25);
+      box-shadow: 0 0 35px rgba(0, 255, 170, 0.15);
+      border-radius: 20px;
+      padding: 45px;
+      backdrop-filter: blur(8px);
+    }
+    h1 {
+      font-size: 48px;
+      color: #00ffaa;
+      margin-bottom: 15px;
+      text-shadow: 0 0 15px rgba(0, 255, 170, 0.6);
+    }
+    h2 {
+      font-size: 22px;
+      color: #ccc;
+      margin-bottom: 30px;
+      font-weight: normal;
+    }
+    .description {
+      font-size: 18px;
+      line-height: 1.7;
+      color: #ddd;
+      margin-bottom: 35px;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 15px;
+      padding: 25px;
+      transition: 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      border-color: #00ffaa;
+      box-shadow: 0 0 20px rgba(0, 255, 170, 0.25);
+    }
+    .card h3 {
+      color: #00ffaa;
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+    .card p {
+      color: #bbb;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 35px;
+      padding: 14px 28px;
+      color: #020203;
+      background: #00ffaa;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .btn:hover {
+      background: #00cc88;
+      box-shadow: 0 0 20px rgba(0, 255, 170, 0.5);
+    }
+    .ghost {
+      position: fixed;
+      bottom: -120px;
+      width: 70px;
+      height: 90px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 50% 50% 35% 35%;
+      animation: subir 10s linear infinite;
+      z-index: 1;
+      filter: blur(0.5px);
+    }
+    .ghost::before,
+    .ghost::after {
+      content: "";
+      position: absolute;
+      top: 30px;
+      width: 10px;
+      height: 10px;
+      background: #000;
+      border-radius: 50%;
+    }
+    .ghost::before {
+      left: 20px;
+    }
+    .ghost::after {
+      right: 20px;
+    }
+    .ghost .mouth {
+      position: absolute;
+      top: 50px;
+      left: 50%;
+      width: 14px;
+      height: 18px;
+      background: #000;
+      border-radius: 50%;
+      transform: translateX(-50%);
+    }
+    .g1 {
+      left: 8%;
+      animation-delay: 0s;
+      animation-duration: 12s;
+    }
+    .g2 {
+      left: 25%;
+      animation-delay: 3s;
+      animation-duration: 14s;
+      transform: scale(0.8);
+    }
+    .g3 {
+      left: 52%;
+      animation-delay: 1.5s;
+      animation-duration: 11s;
+      transform: scale(1.1);
+    }
+    .g4 {
+      left: 75%;
+      animation-delay: 5s;
+      animation-duration: 13s;
+      transform: scale(0.9);
+    }
+    .g5 {
+      left: 90%;
+      animation-delay: 2s;
+      animation-duration: 15s;
+      transform: scale(1.2);
+    }
+    @keyframes subir {
+      0% {
+        bottom: -130px;
+        opacity: 0;
+      }
+      15% {
+        opacity: 0.45;
+      }
+      70% {
+        opacity: 0.25;
+      }
+      100% {
+        bottom: 110vh;
+        opacity: 0;
+      }
+    }
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0, 255, 170, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 170, 0.04) 1px, transparent 1px);
+      background-size: 45px 45px;
+      z-index: 0;
+    }
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 36px;
+      }
+      .content {
+        padding: 30px 20px;
+      }
+    }
+  </style>
 </head>
 <body>
-
-<div class="abyss"></div>
-<div class="noise-overlay"></div>
-<div class="ash" id="ashContainer"></div>
-
-<header>
-    <div class="header-container container">
-        <div class="logo">ZEFRANCO</div>
-        <nav>
-            <ul>
-                <li><a href="#about">Abismo</a></li>
-                <li><a href="#projects">Ruínas</a></li>
-                <li><a href="#skills">Arsenal</a></li>
-                <li><a href="#contact">Ecos</a></li>
-            </ul>
-        </nav>
+  <div class="grid-bg"></div>
+  <div class="ghost g1"><div class="mouth"></div></div>
+  <div class="ghost g2"><div class="mouth"></div></div>
+  <div class="ghost g3"><div class="mouth"></div></div>
+  <div class="ghost g4"><div class="mouth"></div></div>
+  <div class="ghost g5"><div class="mouth"></div></div>
+  <section class="hero">
+    <div class="content">
+      <h1>José Francisco</h1>
+      <h2>Cyber Security | Dev Sênior | Hard Code | Banco de Dados</h2>
+      <p class="description">
+        Portfólio profissional focado em segurança da informação,
+        desenvolvimento avançado, arquitetura de sistemas, automações,
+        análise de vulnerabilidades e gerenciamento de bancos de dados.
+      </p>
+      <div class="cards">
+        <div class="card">
+          <h3>Cyber Segurança</h3>
+          <p>Proteção de sistemas, análise de riscos, hardening, testes de segurança e boas práticas contra ameaças digitais.</p>
+        </div>
+        <div class="card">
+          <h3>Dev Sênior</h3>
+          <p>Desenvolvimento de aplicações robustas, APIs, sistemas internos, automações e soluções escaláveis.</p>
+        </div>
+        <div class="card">
+          <h3>Hard Code</h3>
+          <p>Código direto, limpo e eficiente para resolver problemas complexos com desempenho e precisão.</p>
+        </div>
+        <div class="card">
+          <h3>Banco de Dados</h3>
+          <p>Gerenciamento, modelagem, consultas, otimização, segurança e manutenção de bases de dados.</p>
+        </div>
+      </div>
+      <a href="mailto:seuemail@exemplo.com" class="btn">Entrar em Contato</a>
     </div>
-</header>
-
-<main>
-    <section id="about" class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Programar<span> não é apenas código</span><br>é esculpir o vazio.</h1>
-                <p>Eu sou zefranco, arquiteto de sistemas no limiar entre ordem e caos. Desenvolvedor FullStack que esculpe soluções robustas na escuridão digital. Cada linha é um eco, cada servidor, um monumento. Front-end sombrio, back-end inabalável, devops nas camadas mais profundas da infraestrutura.</p>
-                <a href="#projects" class="btn">Explorar legado</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="projects" class="container">
-        <h2 class="section-title">Projetos :: Fragmentos</h2>
-        <div class="projects-grid">
-            <div class="project-card">
-                <h3>ForGamesRum</h3>
-                <p>Integração para comunidades de gamers com matching algorítmico baseado em comportamento e rank. Arquitetura distribuída e APIs resilientes.</p>
-                <div class="project-tags">
-                    <span>Python</span>
-                    <span>Java</span>
-                    <span>JS</span>
-                    <span>CSS</span>
-                </div>
-            </div>
-            <div class="project-card">
-                <h3>Streaming & WebSockets</h3>
-                <p>Backend para streaming com chat em tempo real, utilizando Redis para escalabilidade e PostgreSQL para persistência das mensagens.</p>
-                <div class="project-tags">
-                    <span>Node.js</span>
-                    <span>Socket.io</span>
-                    <span>Redis</span>
-                </div>
-            </div>
-            <div class="project-card">
-                <h3>Mini-K8s em Go</h3>
-                <p>Orquestrador de containers inspirado no Kubernetes. Goroutines, gRPC e simulação de scheduler distribuído.</p>
-                <div class="project-tags">
-                    <span>Go</span>
-                    <span>gRPC</span>
-                    <span>Simulação</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="skills" class="container">
-        <h2 class="section-title">Habilidades Técnicas :: Sombra e Aço</h2>
-        <div class="projects-grid">
-            <div class="project-card skill-card">
-                <h3>Frontend</h3>
-                <p>React, Vue, TypeScript, Next.js, Tailwind, WebGL. Experiências imersivas e interfaces sem concessões.</p>
-                <div class="project-tags">
-                    <span>UI/UX</span>
-                    <span>Performance</span>
-                    <span>WebGL</span>
-                </div>
-            </div>
-            <div class="project-card skill-card">
-                <h3>Backend</h3>
-                <p>Node.js, Python, Rust, Go, PostgreSQL, MongoDB. Microservices, APIs resilientes e design de sistemas.</p>
-                <div class="project-tags">
-                    <span>APIs</span>
-                    <span>Microserviços</span>
-                    <span>Cloud Native</span>
-                </div>
-            </div>
-            <div class="project-card skill-card">
-                <h3>DevOps & Infra</h3>
-                <p>Docker, Kubernetes, AWS, CI/CD, Terraform, Ansible. Automação e infraestrutura como código.</p>
-                <div class="project-tags">
-                    <span>Infraestrutura</span>
-                    <span>Escalabilidade</span>
-                    <span>Segurança</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="container">
-        <h2 class="section-title">Contato :: Sussurro</h2>
-        <div class="contact-line">
-            <p>Ideias obscuras? Projetos além do limite? Entre em contato.</p>
-            <a href="mailto:josefranciscooliveirapimentel@gmail.com" class="btn">Enviar mensagem</a>
-        </div>
-        <hr>
-        <p style="font-size: 0.8rem; color:#666;">canal seguro: criptografia e discrição</p>
-    </section>
-</main>
-
-<footer>
-    <div class="container">
-        <p>© 2025 ZEFRANCO — Todos os direitos reservados ao vazio.</p>
-    </div>
-</footer>
-
-<!-- Player de Áudio Sombrio -->
-<div class="audio-player">
-    <div class="now-playing" id="nowPlaying">Espectro Sonoro</div>
-    <div class="audio-controls">
-        <button class="play-btn" id="playBtn">❚❚</button>
-        <div class="volume-control">
-            <span style="color:#bbb;">◀</span>
-            <input type="range" min="0" max="1" step="0.01" value="0.4" class="volume-slider" id="volumeSlider">
-        </div>
-    </div>
-</div>
-
-<!-- Contador de Visualizações com estilo fúnebre -->
-<div class="view-counter">
-    <svg class="eye-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5z"/>
-    </svg>
-    <span id="viewCount">0</span> <span style="font-size:0.7rem;">visitas</span>
-</div>
-
-<!-- Audio source (arquivo local de exemplo, mas com fallback para um tom ambiente sintético) -->
-<audio id="backgroundMusic" loop preload="auto">
-    <source src="Imperius (Slowed) [NK3MghktlF0].mp3" type="audio/mpeg">
-    <!-- Fallback: se não existir o arquivo, fica silencioso, mas mantém player funcional -->
-</audio>
-
-<script>
-    // Cria partículas de cinza caindo (para atmosfera mais pesada)
-    const ashContainer = document.getElementById('ashContainer');
-    const ASH_COUNT = 60;
-    for (let i = 0; i < ASH_COUNT; i++) {
-        const particle = document.createElement('div');
-        particle.classList.add('ash-particle');
-        const size = Math.random() * 5 + 2;
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-        particle.style.left = `${Math.random() * 100}%`;
-        particle.style.animationDuration = `${Math.random() * 12 + 6}s`;
-        particle.style.animationDelay = `${Math.random() * 15}s`;
-        particle.style.opacity = Math.random() * 0.4 + 0.1;
-        ashContainer.appendChild(particle);
-    }
-
-    // Efeito adicional: mouse trail sombrio (opcional)
-    document.body.addEventListener('mousemove', (e) => {
-        if (Math.random() > 0.95) {
-            const trail = document.createElement('div');
-            trail.style.position = 'fixed';
-            trail.style.left = e.clientX + 'px';
-            trail.style.top = e.clientY + 'px';
-            trail.style.width = '3px';
-            trail.style.height = '3px';
-            trail.style.backgroundColor = '#3a3a3a';
-            trail.style.borderRadius = '0%';
-            trail.style.pointerEvents = 'none';
-            trail.style.zIndex = '9999';
-            trail.style.opacity = '0.6';
-            trail.style.filter = 'blur(1px)';
-            document.body.appendChild(trail);
-            setTimeout(() => { trail.remove(); }, 300);
-        }
-    });
-
-    // Player de áudio (controles) - design sombrio mantido
-    const audio = document.getElementById('backgroundMusic');
-    const playBtn = document.getElementById('playBtn');
-    const volumeSlider = document.getElementById('volumeSlider');
-
-    // Configura volume inicial
-    audio.volume = 0.4;
-    volumeSlider.value = 0.4;
-
-    // Tentar carregar o arquivo de áudio, caso não exista, não dá erro
-    audio.addEventListener('error', (e) => {
-        console.log("Arquivo de áudio não encontrado, mas o player ainda funciona simbolicamente");
-        // Apenas mantém a interface, mas sem som (experiência visual)
-    });
-
-    // Controle Play/Pause
-    playBtn.addEventListener('click', () => {
-        if (audio.paused) {
-            audio.play().catch(err => {
-                console.log("Reprodução automática bloqueada, clique permitiu?");
-                // Se o navegador ainda bloquear, exibir mensagem silenciosa
-            });
-            playBtn.textContent = "❚❚";
-        } else {
-            audio.pause();
-            playBtn.textContent = "▶";
-        }
-    });
-
-    // Volume
-    volumeSlider.addEventListener('input', () => {
-        audio.volume = volumeSlider.value;
-    });
-
-    // Tentativa de autoplay na primeira interação com qualquer parte do site
-    const startAudioOnInteraction = () => {
-        audio.play().then(() => {
-            playBtn.textContent = "❚❚";
-        }).catch(() => {});
-        document.removeEventListener('click', startAudioOnInteraction);
-        document.removeEventListener('keydown', startAudioOnInteraction);
-    };
-    document.addEventListener('click', startAudioOnInteraction, { once: true });
-    document.addEventListener('keydown', startAudioOnInteraction, { once: true });
-
-    // CONTADOR DE VISUALIZAÇÕES - com incremento real e persistente no localStorage
-    const viewCountSpan = document.getElementById('viewCount');
-
-    function updateViewCounter() {
-        let views = localStorage.getItem('bleak_portfolio_views');
-        if (views === null) {
-            views = 1;
-        } else {
-            views = parseInt(views) + 1;
-        }
-        localStorage.setItem('bleak_portfolio_views', views);
-        animateNumber(viewCountSpan, 0, views, 800);
-    }
-
-    function animateNumber(element, start, end, duration) {
-        let startTime = null;
-        function step(currentTime) {
-            if (!startTime) startTime = currentTime;
-            const progress = Math.min((currentTime - startTime) / duration, 1);
-            const current = Math.floor(progress * (end - start) + start);
-            element.innerText = current;
-            if (progress < 1) {
-                requestAnimationFrame(step);
-            } else {
-                element.innerText = end;
-            }
-        }
-        requestAnimationFrame(step);
-    }
-
-    // executar contador apenas uma vez por sessão? mas conta visitas reais (cada carregamento)
-    window.addEventListener('load', () => {
-        updateViewCounter();
-        // pequeno efeito de digitação no título? opcional
-        const logo = document.querySelector('.logo');
-        if(logo) logo.style.opacity = '1';
-    });
-
-    // Geração de "estrelas mortas" pontuais para atmosfera (pequenos pontos brancos muito sutis)
-    function addDeadStar() {
-        const starDead = document.createElement('div');
-        starDead.style.position = 'fixed';
-        starDead.style.backgroundColor = '#3f3f3f';
-        starDead.style.width = '1px';
-        starDead.style.height = '1px';
-        starDead.style.borderRadius = '50%';
-        starDead.style.left = Math.random() * 100 + '%';
-        starDead.style.top = Math.random() * 100 + '%';
-        starDead.style.zIndex = '-1';
-        starDead.style.opacity = Math.random() * 0.4;
-        starDead.style.pointerEvents = 'none';
-        document.body.appendChild(starDead);
-        setTimeout(() => starDead.remove(), 4000);
-    }
-    setInterval(addDeadStar, 3500);
-
-    // Rolagem suave para links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const targetId = this.getAttribute('href');
-            if(targetId === "#" || targetId === "") return;
-            const target = document.querySelector(targetId);
-            if(target) {
-                e.preventDefault();
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
-    });
-
-    // Efeito hover de cards: brilho monocromático
-    const cards = document.querySelectorAll('.project-card');
-    cards.forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            card.style.borderLeft = '3px solid #8e8e8e';
-        });
-        card.addEventListener('mouseleave', () => {
-            card.style.borderLeft = '1px solid #242424';
-        });
-    });
-</script>
+  </section>
 </body>
 </html>
